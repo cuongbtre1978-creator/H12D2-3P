@@ -1,0 +1,2357 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BÀI KIỂM TRA HÓA HỌC 12 – Thời gian: 40 phút</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+  <!-- Cấu hình MathJax v3 + mhchem trước khi tải script -->
+  <script>
+    window.MathJax = {
+      loader: { load: ['[tex]/mhchem'] },
+      tex: {
+        packages: { '[+]': ['mhchem'] },
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 35%, #311042 70%, #0f172a 100%);
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --card-border: rgba(255, 255, 255, 0.35);
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-soft: #eef2ff;
+      --accent: #06b6d4;
+      --success: #16a34a;
+      --success-soft: #dcfce7;
+      --danger: #dc2626;
+      --danger-soft: #fee2e2;
+      --warning: #d97706;
+      --warning-soft: #fef3c7;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-color: #cbd5e1;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-card: 0 12px 32px -4px rgba(15, 23, 42, 0.28);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+
+    sub, sup {
+      font-size: 0.78em;
+      line-height: 0;
+      position: relative;
+      vertical-align: baseline;
+    }
+    sup { top: -0.5em; }
+    sub { bottom: -0.25em; }
+
+    /* Header & Sticky Bar */
+    .top-sticky-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      padding: 10px 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .top-bar-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      background: linear-gradient(90deg, #38bdf8, #a78bfa, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .student-badge {
+      font-size: 0.85rem;
+      color: #cbd5e1;
+    }
+
+    .status-widgets {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .progress-pill {
+      background: rgba(255, 255, 255, 0.12);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .timer-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 2px solid #38bdf8;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #38bdf8;
+      transition: all 0.3s ease;
+    }
+
+    .timer-box.warn-5m {
+      border-color: #f59e0b;
+      color: #fbbf24;
+      background: rgba(120, 53, 15, 0.45);
+    }
+
+    .timer-box.warn-1m {
+      border-color: #ef4444;
+      color: #f87171;
+      background: rgba(127, 29, 29, 0.6);
+    }
+
+    /* Container */
+    .main-container {
+      max-width: 1020px;
+      margin: 28px auto;
+      padding: 0 16px;
+    }
+
+    /* Glass Card */
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    /* Hero Banner */
+    .exam-Banner {
+      text-align: center;
+      padding: 28px 20px;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.92), rgba(6, 182, 212, 0.88));
+      color: #ffffff;
+      border-radius: var(--radius-lg);
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .exam-Banner h1 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .exam-Banner p {
+      font-size: 1.05rem;
+      font-weight: 500;
+      opacity: 0.95;
+    }
+
+    /* Login Screen */
+    .login-wrapper {
+      max-width: 520px;
+      margin: 48px auto;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 1rem;
+      font-family: inherit;
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-md);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: #fff;
+      color: var(--text-main);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.18);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: inherit;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:focus-visible {
+      outline: 3px solid #38bdf8;
+      outline-offset: 2px;
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4f46e5, #2563eb);
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: linear-gradient(135deg, #4338ca, #1d4ed8);
+      transform: translateY(-1px);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #16a34a, #059669);
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(22, 163, 74, 0.35);
+    }
+
+    .btn-success:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: #cbd5e1;
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    .alert-box {
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      margin-bottom: 18px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      display: none;
+    }
+
+    .alert-error {
+      background: var(--danger-soft);
+      color: #991b1b;
+      border: 1px solid #f87171;
+    }
+
+    .alert-warning {
+      background: var(--warning-soft);
+      color: #92400e;
+      border: 1px solid #fbbf24;
+    }
+
+    /* Quick Navigation Map */
+    .question-nav-card {
+      padding: 18px 22px;
+      margin-bottom: 24px;
+    }
+
+    .nav-section-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      letter-spacing: 0.4px;
+    }
+
+    .nav-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .nav-chip {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border-color);
+      background: #f8fafc;
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .nav-chip:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .nav-chip.answered {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* Section Header */
+    .part-header {
+      background: linear-gradient(90deg, #1e1b4b, #312e81);
+      color: #fff;
+      padding: 16px 22px;
+      border-radius: var(--radius-md);
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .part-header h2 {
+      font-size: 1.18rem;
+      font-weight: 700;
+    }
+
+    .part-header span {
+      font-size: 0.9rem;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    /* Question Cards */
+    .question-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      padding: 20px 22px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      scroll-margin-top: 90px;
+    }
+
+    .question-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+    }
+
+    .q-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .q-badge {
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      white-space: nowrap;
+    }
+
+    .q-score-badge {
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .q-text {
+      font-size: 1.03rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 14px;
+    }
+
+    /* Part 1 Options */
+    .options-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    @media (min-width: 640px) {
+      .options-list.two-cols {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      background: #f8fafc;
+      user-select: none;
+    }
+
+    .option-label:hover:not(.locked) {
+      border-color: #94a3b8;
+      background: #f1f5f9;
+    }
+
+    .option-label input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .option-label.selected {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .option-key {
+      font-weight: 700;
+      color: var(--primary);
+      min-width: 22px;
+    }
+
+    .option-text {
+      font-size: 0.98rem;
+      color: var(--text-main);
+    }
+
+    /* Part 2 Statements */
+    .tf-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tf-row {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 16px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      background: #f8fafc;
+    }
+
+    @media (min-width: 640px) {
+      .tf-row {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    .tf-statement-text {
+      font-size: 0.97rem;
+      flex: 1;
+    }
+
+    .tf-statement-label {
+      font-weight: 700;
+      color: var(--primary);
+      margin-right: 6px;
+    }
+
+    .tf-choices {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .tf-btn-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      background: #ffffff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .tf-btn-label input[type="radio"] {
+      accent-color: var(--primary);
+    }
+
+    .tf-btn-label.selected {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    /* Part 3 Short Answer */
+    .sa-wrapper {
+      margin-top: 8px;
+    }
+
+    .sa-input {
+      max-width: 320px;
+      font-weight: 600;
+    }
+
+    /* Post-submit Answer Reveal Styles */
+    .reveal-box {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: none;
+    }
+
+    .reveal-correct {
+      background: var(--success-soft);
+      color: #166534;
+      border: 1px solid #86efac;
+    }
+
+    .reveal-wrong {
+      background: var(--danger-soft);
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+    }
+
+    .option-label.ans-correct {
+      border-color: var(--success) !important;
+      background: var(--success-soft) !important;
+    }
+
+    .option-label.ans-wrong {
+      border-color: var(--danger) !important;
+      background: var(--danger-soft) !important;
+    }
+
+    .tf-row.ans-correct {
+      border-color: var(--success) !important;
+      background: var(--success-soft) !important;
+    }
+
+    .tf-row.ans-wrong {
+      border-color: var(--danger) !important;
+      background: var(--danger-soft) !important;
+    }
+
+    /* Result Modal / Card */
+    .result-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow-y: auto;
+    }
+
+    .result-modal {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      max-width: 620px;
+      width: 100%;
+      padding: 28px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
+      animation: popIn 0.25s ease-out;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .result-score-circle {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
+    }
+
+    .result-score-circle .big-score {
+      font-size: 1.85rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .result-score-circle .max-score {
+      font-size: 0.82rem;
+      opacity: 0.9;
+    }
+
+    .result-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.94rem;
+    }
+
+    .result-table th,
+    .result-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+    }
+
+    .result-table th {
+      color: var(--text-muted);
+      font-weight: 600;
+      width: 48%;
+    }
+
+    .result-table td {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .result-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+
+    /* Fixed Teacher Watermark at Bottom-Left */
+    .teacher-watermark {
+      position: fixed;
+      bottom: 12px;
+      left: 14px;
+      z-index: 90;
+      background: rgba(15, 23, 42, 0.78);
+      color: #f8fafc;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(6px);
+      pointer-events: none;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 600px) {
+      .exam-Banner h1 {
+        font-size: 1.35rem;
+      }
+      .glass-card {
+        padding: 18px;
+      }
+      .question-card {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Thanh trạng thái cố định khi làm bài -->
+  <header id="stickyBar" class="top-sticky-bar hidden">
+    <div class="top-bar-inner">
+      <div class="brand-info">
+        <div class="brand-title">BÀI KIỂM TRA HÓA HỌC 12</div>
+        <div id="studentBadge" class="student-badge">Học sinh: --- | Lớp: ---</div>
+      </div>
+      <div class="status-widgets">
+        <div id="progressPill" class="progress-pill">Đã làm: 0 / 27 câu</div>
+        <div id="timerBox" class="timer-box" aria-live="polite">
+          <span>⏱</span>
+          <span id="timerDisplay">40:00</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <!-- Banner tiêu đề -->
+    <section class="exam-Banner">
+      <h1>BÀI KIỂM TRA HÓA HỌC 12</h1>
+      <p>Thời gian: 40 phút &bull; Chương trình GDPT 2018</p>
+    </section>
+
+    <!-- MÀN HÌNH ĐĂNG NHẬP -->
+    <section id="loginSection" class="glass-card login-wrapper">
+      <h2 style="margin-bottom: 6px; font-size: 1.35rem; text-align: center;">Thông tin học sinh</h2>
+      <p style="text-align: center; color: var(--text-muted); font-size: 0.92rem; margin-bottom: 22px;">
+        Vui lòng nhập đầy đủ Họ và tên, Lớp để bắt đầu làm bài kiểm tra.
+      </p>
+
+      <div id="loginError" class="alert-box alert-error" role="alert"></div>
+
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label for="inputHoTen">Họ và tên học sinh <span style="color: var(--danger);">*</span></label>
+          <input
+            type="text"
+            id="inputHoTen"
+            class="form-control"
+            placeholder="Ví dụ: Nguyễn Văn An"
+            autocomplete="name"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="inputLop">Lớp <span style="color: var(--danger);">*</span></label>
+          <input
+            type="text"
+            id="inputLop"
+            class="form-control"
+            placeholder="Ví dụ: 12A1"
+            required
+          />
+        </div>
+
+        <button type="submit" id="btnStartExam" class="btn btn-primary btn-block" style="margin-top: 10px;">
+          Bắt đầu làm bài
+        </button>
+      </form>
+    </section>
+
+    <!-- MÀN HÌNH LÀM BÀI -->
+    <section id="examSection" class="hidden">
+      <!-- Bảng điều hướng câu hỏi nhanh -->
+      <div class="glass-card question-nav-card">
+        <div class="nav-section-title">Bảng điều hướng câu hỏi</div>
+        <div id="navChipsContainer"></div>
+      </div>
+
+      <!-- Cảnh báo lỗi nộp bài nếu có -->
+      <div id="submitAlert" class="alert-box alert-error" role="alert"></div>
+
+      <!-- NỘI DUNG 3 PHẦN -->
+      <div class="glass-card">
+        <div class="part-header">
+          <h2>PHẦN 1. Trắc nghiệm nhiều lựa chọn</h2>
+          <span>20 câu &bull; 5,0 điểm (0,25 điểm/câu)</span>
+        </div>
+        <div id="part1Container"></div>
+      </div>
+
+      <div class="glass-card">
+        <div class="part-header">
+          <h2>PHẦN 2. Trắc nghiệm đúng sai</h2>
+          <span>3 câu &bull; 3,0 điểm (1,0 điểm/câu)</span>
+        </div>
+        <div id="part2Container"></div>
+      </div>
+
+      <div class="glass-card">
+        <div class="part-header">
+          <h2>PHẦN 3. Trắc nghiệm trả lời ngắn</h2>
+          <span>4 câu &bull; 2,0 điểm (0,5 điểm/câu)</span>
+        </div>
+        <div id="part3Container"></div>
+      </div>
+
+      <!-- Khu vực nút hành động cuối bài -->
+      <div class="glass-card" style="text-align: center;">
+        <div id="preSubmitActions">
+          <p style="margin-bottom: 14px; color: var(--text-muted); font-size: 0.95rem;">
+            Kiểm tra kĩ các câu trả lời trước khi bấm nút nộp bài.
+          </p>
+          <button type="button" id="btnSubmitExam" class="btn btn-success" style="min-width: 240px; font-size: 1.08rem;">
+            Nộp bài kiểm tra
+          </button>
+        </div>
+
+        <div id="postSubmitActions" class="hidden" style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+          <button type="button" id="btnShowModalAgain" class="btn btn-primary">
+            Xem bảng kết quả
+          </button>
+          <button type="button" id="btnRevealAnswersInline" class="btn btn-secondary">
+            Hiện đáp án
+          </button>
+          <button type="button" id="btnLogoutInline" class="btn btn-secondary">
+            Đăng xuất / Kết thúc
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL KẾT QUẢ SAU KHI NỘP -->
+  <div id="resultModalBackdrop" class="result-modal-backdrop" role="dialog" aria-modal="true">
+    <div class="result-modal">
+      <h2 style="text-align: center; font-size: 1.4rem; margin-bottom: 14px;">KẾT QUẢ BÀI KIỂM TRA</h2>
+
+      <div class="result-score-circle">
+        <span id="resTotalScore" class="big-score">0.00</span>
+        <span class="max-score">/ 10 điểm</span>
+      </div>
+
+      <div id="resDriveWarning" class="alert-box alert-warning" style="display: none;"></div>
+
+      <table class="result-table">
+        <tbody>
+          <tr>
+            <th>Họ và tên học sinh</th>
+            <td id="resHoTen">---</td>
+          </tr>
+          <tr>
+            <th>Lớp</th>
+            <td id="resLop">---</td>
+          </tr>
+          <tr>
+            <th>Điểm PHẦN 1 (Trắc nghiệm)</th>
+            <td id="resScoreP1">0.00 / 5,00</td>
+          </tr>
+          <tr>
+            <th>Điểm PHẦN 2 (Đúng/Sai)</th>
+            <td id="resScoreP2">0.00 / 3,00</td>
+          </tr>
+          <tr>
+            <th>Điểm PHẦN 3 (Trả lời ngắn)</th>
+            <td id="resScoreP3">0.00 / 2,00</td>
+          </tr>
+          <tr>
+            <th>Thống kê số câu (27 câu)</th>
+            <td id="resStats">---</td>
+          </tr>
+          <tr>
+            <th>Thời gian vào làm bài</th>
+            <td id="resStartTime">---</td>
+          </tr>
+          <tr>
+            <th>Thời gian nộp bài</th>
+            <td id="resEndTime">---</td>
+          </tr>
+          <tr>
+            <th>Tổng thời gian làm bài</th>
+            <td id="resDuration">---</td>
+          </tr>
+          <tr>
+            <th>Trạng thái lưu Google Sheet</th>
+            <td id="resSheetStatus">---</td>
+          </tr>
+          <tr>
+            <th>Trạng thái lưu bài làm Google Drive</th>
+            <td id="resDriveStatus">---</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="result-actions">
+        <button type="button" id="btnModalRevealAnswers" class="btn btn-primary">
+          Hiện đáp án chi tiết
+        </button>
+        <button type="button" id="btnModalClose" class="btn btn-secondary">
+          Đóng bảng thông báo
+        </button>
+        <button type="button" id="btnModalLogout" class="btn btn-secondary">
+          Đăng xuất / Kết thúc
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dòng chữ cố định góc dưới bên trái -->
+  <div class="teacher-watermark">Thầy Lê Nguyễn Cường</div>
+
+  <script>
+    const APPS_SCRIPT_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz0w4s-txRzGbeNLdKvB8vSVINlQeRH6wOTQua6bWv4acoKV1Mkrz_Macju9gVbqtfm/exec";
+
+    // =========================================================================
+    // DỮ LIỆU ĐỀ KIỂM TRA HÓA HỌC 12 (NGUỒN DUY NHẤT TỪ ĐỀ CUNG CẤP)
+    // =========================================================================
+    const examData = {
+      title: "BÀI KIỂM TRA HÓA HỌC 12",
+      subjectName: "Hóa học 12",
+      durationSeconds: 2400,
+      part1: [
+        {
+          id: "P1Q01",
+          sourceNumber: 1,
+          text: "Chất nào sau đây là xà phòng?",
+          plainText: "Chất nào sau đây là xà phòng?",
+          options: [
+            { key: "A", text: "C<sub>3</sub>H<sub>5</sub>(OH)<sub>3</sub>.", plainText: "C₃H₅(OH)₃." },
+            { key: "B", text: "CH<sub>3</sub>[CH<sub>2</sub>]<sub>16</sub>COONa.", plainText: "CH₃[CH₂]₁₆COONa." },
+            { key: "C", text: "CH<sub>3</sub>[CH<sub>2</sub>]<sub>4</sub>COONa.", plainText: "CH₃[CH₂]₄COONa." },
+            { key: "D", text: "CH<sub>3</sub>[CH<sub>2</sub>]<sub>14</sub>OSO<sub>3</sub>Na.", plainText: "CH₃[CH₂]₁₄OSO₃Na." }
+          ],
+          correctAnswer: "B"
+        },
+        {
+          id: "P1Q02",
+          sourceNumber: 2,
+          text: "Chất nào sau đây là chất giặt rửa tổng hợp?",
+          plainText: "Chất nào sau đây là chất giặt rửa tổng hợp?",
+          options: [
+            { key: "A", text: "C<sub>3</sub>H<sub>5</sub>(OH)<sub>3</sub>.", plainText: "C₃H₅(OH)₃." },
+            { key: "B", text: "CH<sub>3</sub>[CH<sub>2</sub>]<sub>16</sub>COONa.", plainText: "CH₃[CH₂]₁₆COONa." },
+            { key: "C", text: "CH<sub>3</sub>[CH<sub>2</sub>]<sub>4</sub>COONa.", plainText: "CH₃[CH₂]₄COONa." },
+            { key: "D", text: "CH<sub>3</sub>[CH<sub>2</sub>]<sub>15</sub>SO<sub>3</sub>Na.", plainText: "CH₃[CH₂]₁₅SO₃Na." }
+          ],
+          correctAnswer: "D"
+        },
+        {
+          id: "P1Q03",
+          sourceNumber: 3,
+          text: "Thành phần chính của xà phòng là",
+          plainText: "Thành phần chính của xà phòng là",
+          options: [
+            { key: "A", text: "muối của acid béo.", plainText: "muối của acid béo." },
+            { key: "B", text: "muối của acid vô cơ.", plainText: "muối của acid vô cơ." },
+            { key: "C", text: "muối sodium hoặc potassium của acid béo.", plainText: "muối sodium hoặc potassium của acid béo." },
+            { key: "D", text: "muối sodium hoặc potassium của acid.", plainText: "muối sodium hoặc potassium của acid." }
+          ],
+          correctAnswer: "C"
+        },
+        {
+          id: "P1Q04",
+          sourceNumber: 4,
+          text: "Thành phần chính của chất giặt rửa tổng hợp thường là",
+          plainText: "Thành phần chính của chất giặt rửa tổng hợp thường là",
+          options: [
+            { key: "A", text: "muối sodium, potassium của acid béo.", plainText: "muối sodium, potassium của acid béo." },
+            { key: "B", text: "muối sodium của acid vô cơ.", plainText: "muối sodium của acid vô cơ." },
+            { key: "C", text: "muối sodium alkylsulfate (R-OSO<sub>3</sub>Na), sodium alkylbenzenesulfonate (R-SO<sub>3</sub>Na).", plainText: "muối sodium alkylsulfate (R-OSO₃Na), sodium alkylbenzenesulfonate (R-SO₃Na)." },
+            { key: "D", text: "glycerol và ethylene glycol.", plainText: "glycerol và ethylene glycol." }
+          ],
+          correctAnswer: "C"
+        },
+        {
+          id: "P1Q05",
+          sourceNumber: 5,
+          text: "Cấu tạo phổ biến của xà phòng và chất giặt rửa tổng hợp gồm mấy phần?",
+          plainText: "Cấu tạo phổ biến của xà phòng và chất giặt rửa tổng hợp gồm mấy phần?",
+          options: [
+            { key: "A", text: "1 phần.", plainText: "1 phần." },
+            { key: "B", text: "2 phần.", plainText: "2 phần." },
+            { key: "C", text: "3 phần.", plainText: "3 phần." },
+            { key: "D", text: "4 phần.", plainText: "4 phần." }
+          ],
+          correctAnswer: "B"
+        },
+        {
+          id: "P1Q06",
+          sourceNumber: 6,
+          text: "Phần kị nước trong xà phòng và chất giặt rửa là",
+          plainText: "Phần kị nước trong xà phòng và chất giặt rửa là",
+          options: [
+            { key: "A", text: "nhóm carboxylate.", plainText: "nhóm carboxylate." },
+            { key: "B", text: "nhóm sulfate.", plainText: "nhóm sulfate." },
+            { key: "C", text: "gốc hydrocarbon.", plainText: "gốc hydrocarbon." },
+            { key: "D", text: "nhóm sulfonate.", plainText: "nhóm sulfonate." }
+          ],
+          correctAnswer: "C"
+        },
+        {
+          id: "P1Q07",
+          sourceNumber: 7,
+          text: "Xà phòng có thể được điều chế từ nguồn nguyên liệu nào sau đây?",
+          plainText: "Xà phòng có thể được điều chế từ nguồn nguyên liệu nào sau đây?",
+          options: [
+            { key: "A", text: "Glycerol và dầu mỏ.", plainText: "Glycerol và dầu mỏ." },
+            { key: "B", text: "Nước bồ hòn, bồ kết.", plainText: "Nước bồ hòn, bồ kết." },
+            { key: "C", text: "Dầu thực vật và củ cải đường.", plainText: "Dầu thực vật và củ cải đường." },
+            { key: "D", text: "Mỡ động vật và dầu mỏ.", plainText: "Mỡ động vật và dầu mỏ." }
+          ],
+          correctAnswer: "D"
+        },
+        {
+          id: "P1Q08",
+          sourceNumber: 8,
+          text: "Nguyên liệu nào sau đây dùng để điều chế chất giặt rửa tự nhiên?",
+          plainText: "Nguyên liệu nào sau đây dùng để điều chế chất giặt rửa tự nhiên?",
+          options: [
+            { key: "A", text: "Dầu mỏ.", plainText: "Dầu mỏ." },
+            { key: "B", text: "Mỡ động vật.", plainText: "Mỡ động vật." },
+            { key: "C", text: "Gỗ.", plainText: "Gỗ." },
+            { key: "D", text: "Bồ kết.", plainText: "Bồ kết." }
+          ],
+          correctAnswer: "D"
+        },
+        {
+          id: "P1Q09",
+          sourceNumber: 9,
+          text: "Nguyên liệu nào sau đây dùng để điều chế chất giặt rửa tổng hợp?",
+          plainText: "Nguyên liệu nào sau đây dùng để điều chế chất giặt rửa tổng hợp?",
+          options: [
+            { key: "A", text: "Dầu mỏ.", plainText: "Dầu mỏ." },
+            { key: "B", text: "Mỡ động vật.", plainText: "Mỡ động vật." },
+            { key: "C", text: "Mật ong.", plainText: "Mật ong." },
+            { key: "D", text: "Tinh bột.", plainText: "Tinh bột." }
+          ],
+          correctAnswer: "A"
+        },
+        {
+          id: "P1Q10",
+          sourceNumber: 10,
+          text: "Xà phòng và chất giặt rửa có khả năng tẩy rửa là do phân tử của chúng có",
+          plainText: "Xà phòng và chất giặt rửa có khả năng tẩy rửa là do phân tử của chúng có",
+          options: [
+            { key: "A", text: "hai đầu phân cực.", plainText: "hai đầu phân cực." },
+            { key: "B", text: "hai đầu không phân cực.", plainText: "hai đầu không phân cực." },
+            { key: "C", text: "một đầu phân cực và một đầu không phân cực.", plainText: "một đầu phân cực và một đầu không phân cực." },
+            { key: "D", text: "một đầu kị nước và một đầu ưa dầu.", plainText: "một đầu kị nước và một đầu ưa dầu." }
+          ],
+          correctAnswer: "C"
+        },
+        {
+          id: "P1Q11",
+          sourceNumber: 11,
+          text: "Ester nào sau đây tác dụng với NaOH thu được ethyl alcohol?",
+          plainText: "Ester nào sau đây tác dụng với NaOH thu được ethyl alcohol?",
+          options: [
+            { key: "A", text: "CH<sub>3</sub>COOC<sub>2</sub>H<sub>5</sub>.", plainText: "CH₃COOC₂H₅." },
+            { key: "B", text: "CH<sub>3</sub>COOC<sub>3</sub>H<sub>7</sub>.", plainText: "CH₃COOC₃H₇." },
+            { key: "C", text: "C<sub>2</sub>H<sub>5</sub>COOCH<sub>3</sub>.", plainText: "C₂H₅COOCH₃." },
+            { key: "D", text: "HCOOCH<sub>3</sub>.", plainText: "HCOOCH₃." }
+          ],
+          correctAnswer: "A"
+        },
+        {
+          id: "P1Q12",
+          sourceNumber: 12,
+          text: "Khi đun nóng chất X có công thức phân tử C<sub>3</sub>H<sub>6</sub>O<sub>2</sub> với dung dịch NaOH thu được CH<sub>3</sub>COONa. Công thức cấu tạo của X là",
+          plainText: "Khi đun nóng chất X có công thức phân tử C₃H₆O₂ với dung dịch NaOH thu được CH₃COONa. Công thức cấu tạo của X là",
+          options: [
+            { key: "A", text: "HCOOC<sub>2</sub>H<sub>5</sub>.", plainText: "HCOOC₂H₅." },
+            { key: "B", text: "CH<sub>3</sub>COOCH<sub>3</sub>.", plainText: "CH₃COOCH₃." },
+            { key: "C", text: "C<sub>2</sub>H<sub>5</sub>COOH.", plainText: "C₂H₅COOH." },
+            { key: "D", text: "CH<sub>3</sub>COOC<sub>2</sub>H<sub>5</sub>.", plainText: "CH₃COOC₂H₅." }
+          ],
+          correctAnswer: "B"
+        },
+        {
+          id: "P1Q13",
+          sourceNumber: 13,
+          text: "Dầu chuối là ester có tên isoamyl acetate, được điều chế từ",
+          plainText: "Dầu chuối là ester có tên isoamyl acetate, được điều chế từ",
+          options: [
+            { key: "A", text: "CH<sub>3</sub>OH, CH<sub>3</sub>COOH.", plainText: "CH₃OH, CH₃COOH." },
+            { key: "B", text: "(CH<sub>3</sub>)<sub>2</sub>CH-CH<sub>2</sub>OH, CH<sub>3</sub>COOH.", plainText: "(CH₃)₂CH-CH₂OH, CH₃COOH." },
+            { key: "C", text: "C<sub>2</sub>H<sub>5</sub>COOH, C<sub>2</sub>H<sub>5</sub>OH.", plainText: "C₂H₅COOH, C₂H₅OH." },
+            { key: "D", text: "CH<sub>3</sub>COOH, (CH<sub>3</sub>)<sub>2</sub>CH-CH<sub>2</sub>CH<sub>2</sub>OH.", plainText: "CH₃COOH, (CH₃)₂CH-CH₂CH₂OH." }
+          ],
+          correctAnswer: "D"
+        },
+        {
+          id: "P1Q14",
+          sourceNumber: 14,
+          text: "Mệnh đề không đúng là",
+          plainText: "Mệnh đề không đúng là",
+          options: [
+            { key: "A", text: "CH<sub>3</sub>CH<sub>2</sub>COOCH<sub>2</sub>CH<sub>3</sub> cùng dãy đồng đẳng với CH<sub>2</sub>=CHCOOCH<sub>3</sub>.", plainText: "CH₃CH₂COOCH₂CH₃ cùng dãy đồng đẳng với CH₂=CHCOOCH₃." },
+            { key: "B", text: "CH<sub>3</sub>CH<sub>2</sub>COOCH=CH<sub>2</sub> có thể trùng hợp tạo thành polymer.", plainText: "CH₃CH₂COOCH=CH₂ có thể trùng hợp tạo thành polymer." },
+            { key: "C", text: "CH<sub>3</sub>CH<sub>2</sub>COOCH=CH<sub>2</sub> có thể tác dụng với dung dịch Br<sub>2</sub>.", plainText: "CH₃CH₂COOCH=CH₂ có thể tác dụng với dung dịch Br₂." },
+            { key: "D", text: "CH<sub>3</sub>CH<sub>2</sub>COOCH=CH<sub>2</sub> tác dụng với dung dịch NaOH thu được aldehyde và muối.", plainText: "CH₃CH₂COOCH=CH₂ tác dụng với dung dịch NaOH thu được aldehyde và muối." }
+          ],
+          correctAnswer: "A"
+        },
+        {
+          id: "P1Q15",
+          sourceNumber: 15,
+          text: "Thủy phân tristearin trong dung dịch NaOH, thu được muối có công thức là",
+          plainText: "Thủy phân tristearin trong dung dịch NaOH, thu được muối có công thức là",
+          options: [
+            { key: "A", text: "C<sub>2</sub>H<sub>3</sub>COONa.", plainText: "C₂H₃COONa." },
+            { key: "B", text: "HCOONa.", plainText: "HCOONa." },
+            { key: "C", text: "C<sub>17</sub>H<sub>33</sub>COONa.", plainText: "C₁₇H₃₃COONa." },
+            { key: "D", text: "C<sub>17</sub>H<sub>35</sub>COONa.", plainText: "C₁₇H₃₅COONa." }
+          ],
+          correctAnswer: "D"
+        },
+        {
+          id: "P1Q16",
+          sourceNumber: 16,
+          text: "Một số ester được dùng trong hương liệu, mỹ phẩm, bột giặt là nhờ các ester",
+          plainText: "Một số ester được dùng trong hương liệu, mỹ phẩm, bột giặt là nhờ các ester",
+          options: [
+            { key: "A", text: "là chất lỏng dễ bay hơi.", plainText: "là chất lỏng dễ bay hơi." },
+            { key: "B", text: "có mùi thơm, an toàn với người.", plainText: "có mùi thơm, an toàn với người." },
+            { key: "C", text: "có thể bay hơi nhanh sau khi sử dụng.", plainText: "có thể bay hơi nhanh sau khi sử dụng." },
+            { key: "D", text: "đều có nguồn gốc từ thiên nhiên.", plainText: "đều có nguồn gốc từ thiên nhiên." }
+          ],
+          correctAnswer: "B"
+        },
+        {
+          id: "P1Q17",
+          sourceNumber: 17,
+          text: "Phản ứng hoá học nào sau đây xảy ra thuận nghịch?",
+          plainText: "Phản ứng hoá học nào sau đây xảy ra thuận nghịch?",
+          options: [
+            { key: "A", text: "Đun nóng ethyl acetate với dung dịch H<sub>2</sub>SO<sub>4</sub> loãng.", plainText: "Đun nóng ethyl acetate với dung dịch H₂SO₄ loãng." },
+            { key: "B", text: "Đun nóng ethyl acetate với dung dịch NaOH.", plainText: "Đun nóng ethyl acetate với dung dịch NaOH." },
+            { key: "C", text: "Hydrogen hoá chất béo có gốc acid không no.", plainText: "Hydrogen hoá chất béo có gốc acid không no." },
+            { key: "D", text: "Đun nóng chất béo với dung dịch NaOH.", plainText: "Đun nóng chất béo với dung dịch NaOH." }
+          ],
+          correctAnswer: "A"
+        },
+        {
+          id: "P1Q18",
+          sourceNumber: 18,
+          text: "Chất béo triolein có công thức là",
+          plainText: "Chất béo triolein có công thức là",
+          options: [
+            { key: "A", text: "(C<sub>15</sub>H<sub>31</sub>COO)<sub>3</sub>C<sub>3</sub>H<sub>5</sub>.", plainText: "(C₁₅H₃₁COO)₃C₃H₅." },
+            { key: "B", text: "(C<sub>17</sub>H<sub>31</sub>COO)<sub>3</sub>C<sub>3</sub>H<sub>5</sub>.", plainText: "(C₁₇H₃₁COO)₃C₃H₅." },
+            { key: "C", text: "(C<sub>17</sub>H<sub>33</sub>COO)<sub>3</sub>C<sub>3</sub>H<sub>5</sub>.", plainText: "(C₁₇H₃₃COO)₃C₃H₅." },
+            { key: "D", text: "(C<sub>17</sub>H<sub>35</sub>COO)<sub>3</sub>C<sub>3</sub>H<sub>5</sub>.", plainText: "(C₁₇H₃₅COO)₃C₃H₅." }
+          ],
+          correctAnswer: "C"
+        },
+        {
+          id: "P1Q19",
+          sourceNumber: 19,
+          text: "Trong công nghiệp, một lượng lớn chất béo dùng để sản xuất",
+          plainText: "Trong công nghiệp, một lượng lớn chất béo dùng để sản xuất",
+          options: [
+            { key: "A", text: "xà phòng và ethyl alcohol.", plainText: "xà phòng và ethyl alcohol." },
+            { key: "B", text: "xà phòng và glycerol.", plainText: "xà phòng và glycerol." },
+            { key: "C", text: "glucose và ethyl alcohol.", plainText: "glucose và ethyl alcohol." },
+            { key: "D", text: "glucose và glycerol.", plainText: "glucose và glycerol." }
+          ],
+          correctAnswer: "B"
+        },
+        {
+          id: "P1Q20",
+          sourceNumber: 20,
+          text: "Phát biểu nào sau đây không đúng?",
+          plainText: "Phát biểu nào sau đây không đúng?",
+          options: [
+            { key: "A", text: "Chất béo là triester của ethylene glycol với các acid béo.", plainText: "Chất béo là triester của ethylene glycol với các acid béo." },
+            { key: "B", text: "Các chất béo thường không tan trong nước và nhẹ hơn nước.", plainText: "Các chất béo thường không tan trong nước và nhẹ hơn nước." },
+            { key: "C", text: "Triolein có khả năng tham gia phản ứng cộng hydrogen khi đun nóng có xúc tác Ni.", plainText: "Triolein có khả năng tham gia phản ứng cộng hydrogen khi đun nóng có xúc tác Ni." },
+            { key: "D", text: "Chất béo bị thủy phân khi đun nóng trong dung dịch kiềm.", plainText: "Chất béo bị thủy phân khi đun nóng trong dung dịch kiềm." }
+          ],
+          correctAnswer: "A"
+        }
+      ],
+      part2: [
+        {
+          id: "P2Q01",
+          sourceNumber: 1,
+          text: "Xà phòng và chất giặt rửa tổng hợp đều có khả năng làm sạch bụi bẩn, dầu mỡ bám trên bề mặt.",
+          plainText: "Xà phòng và chất giặt rửa tổng hợp đều có khả năng làm sạch bụi bẩn, dầu mỡ bám trên bề mặt.",
+          statements: [
+            {
+              label: "a",
+              text: "Xà phòng dễ tan trong nước hơn chất giặt rửa tổng hợp, do đó được sử dụng phổ biến.",
+              plainText: "Xà phòng dễ tan trong nước hơn chất giặt rửa tổng hợp, do đó được sử dụng phổ biến.",
+              correctAnswer: false
+            },
+            {
+              label: "b",
+              text: "Có thể sử dụng chất giặt rửa tổng hợp với cả nước cứng, do chất giặt rửa tổng hợp không tạo muối khó tan với Ca<sup>2+</sup>, Mg<sup>2+</sup>.",
+              plainText: "Có thể sử dụng chất giặt rửa tổng hợp với cả nước cứng, do chất giặt rửa tổng hợp không tạo muối khó tan với Ca²⁺, Mg²⁺.",
+              correctAnswer: true
+            },
+            {
+              label: "c",
+              text: "Chất giặt rửa tổng hợp và xà phòng khó bị phân hủy sinh học bởi các vi sinh vật, do đó gây ô nhiễm môi trường.",
+              plainText: "Chất giặt rửa tổng hợp và xà phòng khó bị phân hủy sinh học bởi các vi sinh vật, do đó gây ô nhiễm môi trường.",
+              correctAnswer: false
+            },
+            {
+              label: "d",
+              text: "Không nên dùng xà phòng trong nước cứng (chứa nhiều ion Ca<sup>2+</sup>, Mg<sup>2+</sup>) do muối của các kim loại này với acid béo ít tan,… và gây hại cho áo, quần sau khi giặt.",
+              plainText: "Không nên dùng xà phòng trong nước cứng (chứa nhiều ion Ca²⁺, Mg²⁺) do muối của các kim loại này với acid béo ít tan,… và gây hại cho áo, quần sau khi giặt.",
+              correctAnswer: true
+            }
+          ]
+        },
+        {
+          id: "P2Q02",
+          sourceNumber: 2,
+          text: "Xà phòng được điều chế bằng phản ứng xà phòng hóa.",
+          plainText: "Xà phòng được điều chế bằng phản ứng xà phòng hóa.",
+          statements: [
+            {
+              label: "a",
+              text: "Đun chất béo (mỡ động vật, dầu thực vật) với dung dịch kiềm đặc ta thu được muối của acid béo (thành phần chính của xà phòng) và glycerol.",
+              plainText: "Đun chất béo (mỡ động vật, dầu thực vật) với dung dịch kiềm đặc ta thu được muối của acid béo (thành phần chính của xà phòng) và glycerol.",
+              correctAnswer: true
+            },
+            {
+              label: "b",
+              text: "Để tách lấy muối của acid béo người ta cho dung dịch HCl bão hòa vào sản phẩm.",
+              plainText: "Để tách lấy muối của acid béo người ta cho dung dịch HCl bão hòa vào sản phẩm.",
+              correctAnswer: false
+            },
+            {
+              label: "c",
+              text: "Muối của acid béo sau khi tách ra đem trộn với các chất phụ gia rồi ép thành bánh, ta thu được xà phòng.",
+              plainText: "Muối của acid béo sau khi tách ra đem trộn với các chất phụ gia rồi ép thành bánh, ta thu được xà phòng.",
+              correctAnswer: true
+            },
+            {
+              label: "d",
+              text: "Dung dịch còn lại sau khi tách lấy muối của acid béo có khả năng hòa tan Cu(OH)<sub>2</sub> tạo dung dịch xanh lam thẫm.",
+              plainText: "Dung dịch còn lại sau khi tách lấy muối của acid béo có khả năng hòa tan Cu(OH)₂ tạo dung dịch xanh lam thẫm.",
+              correctAnswer: true
+            }
+          ]
+        },
+        {
+          id: "P2Q03",
+          sourceNumber: 3,
+          text: "Chất béo có nhiều tính chất hóa học quan trọng.",
+          plainText: "Chất béo có nhiều tính chất hóa học quan trọng.",
+          statements: [
+            {
+              label: "a",
+              text: "Thủy phân chất béo trong môi trường acid thu được muối acid béo và glycerol.",
+              plainText: "Thủy phân chất béo trong môi trường acid thu được muối acid béo và glycerol.",
+              correctAnswer: false
+            },
+            {
+              label: "b",
+              text: "Phản ứng thủy phân chất béo trong môi trường kiềm là phản ứng một chiều.",
+              plainText: "Phản ứng thủy phân chất béo trong môi trường kiềm là phản ứng một chiều.",
+              correctAnswer: true
+            },
+            {
+              label: "c",
+              text: "Để chuyển chất béo lỏng thành chất béo rắn người ra dùng phản ứng hydrogen hóa.",
+              plainText: "Để chuyển chất béo lỏng thành chất béo rắn người ra dùng phản ứng hydrogen hóa.",
+              correctAnswer: true
+            },
+            {
+              label: "d",
+              text: "Hiện tượng dầu mỡ bị ôi là do nhóm -COO- trong phân tử chất béo bị oxi hóa chậm bởi oxygen trong không khí.",
+              plainText: "Hiện tượng dầu mỡ bị ôi là do nhóm -COO- trong phân tử chất béo bị oxi hóa chậm bởi oxygen trong không khí.",
+              correctAnswer: false
+            }
+          ]
+        }
+      ],
+      part3: [
+        {
+          id: "P3Q01",
+          sourceNumber: 1,
+          text: "Cho các chất sau: CH<sub>3</sub>[CH<sub>2</sub>]<sub>10</sub>CH<sub>2</sub>OSO<sub>3</sub>Na; CH<sub>3</sub>[CH<sub>2</sub>]<sub>14</sub>COONa; CH<sub>3</sub>[CH<sub>2</sub>]<sub>11</sub>C<sub>6</sub>H<sub>4</sub>SO<sub>3</sub>Na; CH<sub>3</sub>CH<sub>2</sub>COONa; CH<sub>3</sub>[CH<sub>2</sub>]<sub>16</sub>COOK. Số chất có thể là thành phần chính của xà phòng là bao nhiêu?",
+          plainText: "Cho các chất sau: CH₃[CH₂]₁₀CH₂OSO₃Na; CH₃[CH₂]₁₄COONa; CH₃[CH₂]₁₁C₆H₄SO₃Na; CH₃CH₂COONa; CH₃[CH₂]₁₆COOK. Số chất có thể là thành phần chính của xà phòng là bao nhiêu?",
+          correctAnswer: "2",
+          acceptedAnswers: ["2"]
+        },
+        {
+          id: "P3Q02",
+          sourceNumber: 2,
+          text: "Cho các chất: CH<sub>3</sub>[CH<sub>2</sub>]<sub>14</sub>COONa, CH<sub>3</sub>[CH<sub>2</sub>]<sub>10</sub>CH<sub>2</sub>OSO<sub>3</sub>Na, C<sub>2</sub>H<sub>5</sub>OSO<sub>3</sub>Na, CH<sub>3</sub>[CH<sub>2</sub>]<sub>16</sub>COOK, CH<sub>3</sub>[CH<sub>2</sub>]<sub>11</sub>C<sub>6</sub>H<sub>4</sub>CO<sub>3</sub>Na, CH<sub>3</sub>[CH<sub>2</sub>]<sub>14</sub>COONa. Có bao nhiêu chất là chất giặt rửa tổng hợp?",
+          plainText: "Cho các chất: CH₃[CH₂]₁₄COONa, CH₃[CH₂]₁₀CH₂OSO₃Na, C₂H₅OSO₃Na, CH₃[CH₂]₁₆COOK, CH₃[CH₂]₁₁C₆H₄CO₃Na, CH₃[CH₂]₁₄COONa. Có bao nhiêu chất là chất giặt rửa tổng hợp?",
+          correctAnswer: "1",
+          acceptedAnswers: ["1"]
+        },
+        {
+          id: "P3Q03",
+          sourceNumber: 3,
+          text: "Xà phòng hóa hoàn toàn 44,5 gam chất béo X bằng dung dịch NaOH dư, thu được m gam muối và 4,6 gam glycerol. Giá trị của m là bao nhiêu? (Làm tròn kết quả đến hàng phần mười). (Cho biết: C=12, O=16, Na=23)",
+          plainText: "Xà phòng hóa hoàn toàn 44,5 gam chất béo X bằng dung dịch NaOH dư, thu được m gam muối và 4,6 gam glycerol. Giá trị của m là bao nhiêu? (Làm tròn kết quả đến hàng phần mười). (Cho biết: C=12, O=16, Na=23)",
+          correctAnswer: "45,9",
+          acceptedAnswers: ["45,9", "45.9"]
+        },
+        {
+          id: "P3Q04",
+          sourceNumber: 4,
+          text: "Cho 8,8 gam CH<sub>3</sub>COOC<sub>2</sub>H<sub>5</sub> phản ứng hết với dung dịch NaOH (dư), đun nóng. Khối lượng muối CH<sub>3</sub>COONa thu được là bao nhiêu? (Cho biết: C=12, O=16, Na=23)",
+          plainText: "Cho 8,8 gam CH₃COOC₂H₅ phản ứng hết với dung dịch NaOH (dư), đun nóng. Khối lượng muối CH₃COONa thu được là bao nhiêu? (Cho biết: C=12, O=16, Na=23)",
+          correctAnswer: "8,2",
+          acceptedAnswers: ["8,2", "8.2"]
+        }
+      ]
+    };
+
+    // =========================================================================
+    // QUẢN LÝ STATE
+    // =========================================================================
+    const state = {
+      attemptId: "",
+      hoTen: "",
+      lop: "",
+      started: false,
+      isSubmitting: false,
+      isSubmitted: false,
+      answersRevealed: false,
+      startClientMs: 0,
+      startServerText: "",
+      endServerText: "",
+      timerInterval: null,
+      shuffled: {
+        part1: [],
+        part2: [],
+        part3: []
+      },
+      answers: {
+        part1: {}, // { P1Q01: "A" }
+        part2: {}, // { P2Q01: { a: "Đúng", b: "Sai", c: "", d: "" } }
+        part3: {}  // { P3Q01: "2" }
+      },
+      lastGradeResult: null
+    };
+
+    // =========================================================================
+    // HÀM TIỆN ÍCH: UUID, RANDOM & FISHER-YATES SHUFFLE
+    // =========================================================================
+    function generateAttemptId() {
+      if (window.crypto && typeof window.crypto.randomUUID === "function") {
+        return window.crypto.randomUUID();
+      }
+      const bytes = new Uint8Array(16);
+      if (window.crypto && typeof window.crypto.getRandomValues === "function") {
+        window.crypto.getRandomValues(bytes);
+      } else {
+        for (let i = 0; i < 16; i++) bytes[i] = Math.floor(Math.random() * 256);
+      }
+      bytes[6] = (bytes[6] & 0x0f) | 0x40;
+      bytes[8] = (bytes[8] & 0x3f) | 0x80;
+      const hex = Array.from(bytes, b => b.toString(16).padStart(2, "0")).join("");
+      return `${hex.slice(0,8)}-${hex.slice(8,12)}-${hex.slice(12,16)}-${hex.slice(16,20)}-${hex.slice(20)}`;
+    }
+
+    function secureRandomInt(maxExclusive) {
+      if (window.crypto && typeof window.crypto.getRandomValues === "function") {
+        const array = new Uint32Array(1);
+        window.crypto.getRandomValues(array);
+        return array[0] % maxExclusive;
+      }
+      return Math.floor(Math.random() * maxExclusive);
+    }
+
+    function fisherYatesShuffle(arr) {
+      const copy = arr.slice();
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = secureRandomInt(i + 1);
+        const temp = copy[i];
+        copy[i] = copy[j];
+        copy[j] = temp;
+      }
+      return copy;
+    }
+
+    function round2(val) {
+      return Math.round((val + Number.EPSILON) * 100) / 100;
+    }
+
+    function formatDateTimeFallback(ms) {
+      const d = new Date(ms);
+      const pad = n => String(n).padStart(2, "0");
+      return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+    }
+
+    function formatDurationVi(seconds) {
+      const sec = Math.max(0, Math.round(seconds));
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${String(m).padStart(2, "0")} phút ${String(s).padStart(2, "0")} giây`;
+    }
+
+    function triggerMathJax() {
+      if (window.MathJax && typeof window.MathJax.typesetPromise === "function") {
+        window.MathJax.typesetPromise().catch(err => console.warn("MathJax typeset warning:", err));
+      }
+    }
+
+    // =========================================================================
+    // CHUẨN HÓA VÀ SO SÁNH ĐÁP ÁN PHẦN 3 (TRẢ LỜI NGẮN)
+    // =========================================================================
+    const SUPERSCRIPT_MAP = {
+      "⁰": "0", "¹": "1", "²": "2", "³": "3", "⁴": "4",
+      "⁵": "5", "⁶": "6", "⁷": "7", "⁸": "8", "⁹": "9",
+      "⁺": "+", "⁻": "-"
+    };
+
+    function replaceSuperscripts(str) {
+      return str.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+/g, match => {
+        const converted = Array.from(match).map(ch => SUPERSCRIPT_MAP[ch] || ch).join("");
+        return "^" + converted;
+      });
+    }
+
+    function parseNumericOrScientific(raw) {
+      if (typeof raw !== "string") return null;
+      let s = raw.trim().normalize("NFC");
+      if (!s) return null;
+
+      s = replaceSuperscripts(s);
+      // Loại bỏ một số đơn vị phổ biến ở cuối nếu học sinh gõ kèm
+      s = s.replace(/\s*(gam|g|kg|mol|lít|l|ml|%|amu|pm|cm|nm|đvC)\.?$/i, "").trim();
+      s = s.replace(/,/g, ".");
+      s = s.replace(/\s+/g, "");
+
+      // Dạng khoa học a*10^b hoặc ax10^b hoặc a×10^b
+      const sciMatch = s.match(/^([+-]?\d+(?:\.\d+)?)[×x\*]10\^?\(?([+-]?\d+)\)?$/i);
+      if (sciMatch) {
+        const base = parseFloat(sciMatch[1]);
+        const exp = parseInt(sciMatch[2], 10);
+        if (!Number.isNaN(base) && !Number.isNaN(exp)) {
+          return base * Math.pow(10, exp);
+        }
+      }
+
+      // Số thông thường hoặc e-notation chuẩn
+      if (/^[+-]?\d+(?:\.\d+)?(?:e[+-]?\d+)?$/i.test(s)) {
+        const val = Number(s);
+        if (!Number.isNaN(val)) return val;
+      }
+      return null;
+    }
+
+    function normalizeTextAnswer(raw) {
+      if (typeof raw !== "string") return "";
+      return raw.normalize("NFC").trim().replace(/\s+/g, " ").toLowerCase();
+    }
+
+    function isShortAnswerCorrect(studentRaw, questionObj) {
+      const trimmed = (studentRaw || "").trim();
+      if (!trimmed) return false;
+
+      const candidates = [questionObj.correctAnswer, ...(questionObj.acceptedAnswers || [])];
+      const studentNum = parseNumericOrScientific(trimmed);
+
+      for (const cand of candidates) {
+        const candNum = parseNumericOrScientific(String(cand));
+        if (studentNum !== null && candNum !== null) {
+          if (candNum === 0) {
+            if (Math.abs(studentNum) < 1e-12) return true;
+          } else if (Math.abs(studentNum - candNum) / Math.abs(candNum) < 1e-6) {
+            return true;
+          }
+        }
+        if (normalizeTextAnswer(trimmed) === normalizeTextAnswer(String(cand))) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // =========================================================================
+    // RENDER GIAO DIỆN ĐỀ THI VÀ ĐIỀU HƯỚNG
+    // =========================================================================
+    function initShuffledExam() {
+      state.shuffled.part1 = fisherYatesShuffle(examData.part1);
+      state.shuffled.part2 = fisherYatesShuffle(examData.part2);
+      state.shuffled.part3 = fisherYatesShuffle(examData.part3);
+
+      state.answers.part1 = {};
+      state.answers.part2 = {};
+      state.answers.part3 = {};
+
+      state.shuffled.part2.forEach(q => {
+        state.answers.part2[q.id] = { a: "", b: "", c: "", d: "" };
+      });
+      state.shuffled.part3.forEach(q => {
+        state.answers.part3[q.id] = "";
+      });
+
+      renderNavigationChips();
+      renderPart1();
+      renderPart2();
+      renderPart3();
+      updateProgressUI();
+      triggerMathJax();
+    }
+
+    function renderNavigationChips() {
+      const container = document.getElementById("navChipsContainer");
+      let html = `<div style="font-size:0.8rem;font-weight:600;color:#64748b;margin-bottom:4px;">Phần 1 (Câu 1 – 20)</div><div class="nav-chips">`;
+      state.shuffled.part1.forEach((q, idx) => {
+        const order = idx + 1;
+        html += `<button type="button" class="nav-chip" id="chip_${q.id}" onclick="scrollToQuestion('card_${q.id}')">${order}</button>`;
+      });
+      html += `</div>`;
+
+      html += `<div style="font-size:0.8rem;font-weight:600;color:#64748b;margin-bottom:4px;">Phần 2 (Câu 1 – 3) &amp; Phần 3 (Câu 1 – 4)</div><div class="nav-chips">`;
+      state.shuffled.part2.forEach((q, idx) => {
+        const order = idx + 1;
+        html += `<button type="button" class="nav-chip" id="chip_${q.id}" onclick="scrollToQuestion('card_${q.id}')">ĐS ${order}</button>`;
+      });
+      state.shuffled.part3.forEach((q, idx) => {
+        const order = idx + 1;
+        html += `<button type="button" class="nav-chip" id="chip_${q.id}" onclick="scrollToQuestion('card_${q.id}')">TL ${order}</button>`;
+      });
+      html += `</div>`;
+
+      container.innerHTML = html;
+    }
+
+    window.scrollToQuestion = function(elementId) {
+      const el = document.getElementById(elementId);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    };
+
+    function renderPart1() {
+      const container = document.getElementById("part1Container");
+      const html = state.shuffled.part1.map((q, idx) => {
+        const order = idx + 1;
+        const optionsHtml = q.options.map(opt => `
+          <label class="option-label" id="lbl_${q.id}_${opt.key}">
+            <input
+              type="radio"
+              name="radio_${q.id}"
+              value="${opt.key}"
+              onchange="handlePart1Change('${q.id}', '${opt.key}')"
+            />
+            <span class="option-key">${opt.key}.</span>
+            <span class="option-text">${opt.text}</span>
+          </label>
+        `).join("");
+
+        return `
+          <article class="question-card" id="card_${q.id}">
+            <div class="q-header">
+              <span class="q-badge">Câu ${order}</span>
+              <span class="q-score-badge" id="scoreBadge_${q.id}"></span>
+            </div>
+            <div class="q-text">${q.text}</div>
+            <div class="options-list two-cols">
+              ${optionsHtml}
+            </div>
+            <div class="reveal-box" id="reveal_${q.id}"></div>
+          </article>
+        `;
+      }).join("");
+
+      container.innerHTML = html;
+    }
+
+    function renderPart2() {
+      const container = document.getElementById("part2Container");
+      const html = state.shuffled.part2.map((q, idx) => {
+        const order = idx + 1;
+        const statementsHtml = q.statements.map(st => `
+          <div class="tf-row" id="tfRow_${q.id}_${st.label}">
+            <div class="tf-statement-text">
+              <span class="tf-statement-label">${st.label})</span>
+              <span>${st.text}</span>
+            </div>
+            <div class="tf-choices">
+              <label class="tf-btn-label" id="tfLbl_${q.id}_${st.label}_T">
+                <input
+                  type="radio"
+                  name="tf_${q.id}_${st.label}"
+                  value="Đúng"
+                  onchange="handlePart2Change('${q.id}', '${st.label}', 'Đúng')"
+                />
+                <span>Đúng</span>
+              </label>
+              <label class="tf-btn-label" id="tfLbl_${q.id}_${st.label}_F">
+                <input
+                  type="radio"
+                  name="tf_${q.id}_${st.label}"
+                  value="Sai"
+                  onchange="handlePart2Change('${q.id}', '${st.label}', 'Sai')"
+                />
+                <span>Sai</span>
+              </label>
+            </div>
+          </div>
+        `).join("");
+
+        return `
+          <article class="question-card" id="card_${q.id}">
+            <div class="q-header">
+              <span class="q-badge">Câu ${order}</span>
+              <span class="q-score-badge" id="scoreBadge_${q.id}"></span>
+            </div>
+            <div class="q-text">${q.text}</div>
+            <div class="tf-list">
+              ${statementsHtml}
+            </div>
+            <div class="reveal-box" id="reveal_${q.id}"></div>
+          </article>
+        `;
+      }).join("");
+
+      container.innerHTML = html;
+    }
+
+    function renderPart3() {
+      const container = document.getElementById("part3Container");
+      const html = state.shuffled.part3.map((q, idx) => {
+        const order = idx + 1;
+        return `
+          <article class="question-card" id="card_${q.id}">
+            <div class="q-header">
+              <span class="q-badge">Câu ${order}</span>
+              <span class="q-score-badge" id="scoreBadge_${q.id}"></span>
+            </div>
+            <div class="q-text">${q.text}</div>
+            <div class="sa-wrapper">
+              <input
+                type="text"
+                id="input_${q.id}"
+                class="form-control sa-input"
+                placeholder="Nhập câu trả lời"
+                autocomplete="off"
+                oninput="handlePart3Change('${q.id}', this.value)"
+              />
+            </div>
+            <div class="reveal-box" id="reveal_${q.id}"></div>
+          </article>
+        `;
+      }).join("");
+
+      container.innerHTML = html;
+    }
+
+    // =========================================================================
+    // SỰ KIỆN THAY ĐỔI ĐÁP ÁN CỦA HỌC SINH
+    // =========================================================================
+    window.handlePart1Change = function(qId, selectedKey) {
+      if (state.isSubmitting || state.isSubmitted) return;
+      state.answers.part1[qId] = selectedKey;
+
+      ["A", "B", "C", "D"].forEach(k => {
+        const lbl = document.getElementById(`lbl_${qId}_${k}`);
+        if (lbl) {
+          lbl.classList.toggle("selected", k === selectedKey);
+        }
+      });
+      updateProgressUI();
+    };
+
+    window.handlePart2Change = function(qId, labelKey, value) {
+      if (state.isSubmitting || state.isSubmitted) return;
+      if (!state.answers.part2[qId]) {
+        state.answers.part2[qId] = { a: "", b: "", c: "", d: "" };
+      }
+      state.answers.part2[qId][labelKey] = value;
+
+      const lblT = document.getElementById(`tfLbl_${qId}_${labelKey}_T`);
+      const lblF = document.getElementById(`tfLbl_${qId}_${labelKey}_F`);
+      if (lblT) lblT.classList.toggle("selected", value === "Đúng");
+      if (lblF) lblF.classList.toggle("selected", value === "Sai");
+
+      updateProgressUI();
+    };
+
+    window.handlePart3Change = function(qId, value) {
+      if (state.isSubmitting || state.isSubmitted) return;
+      state.answers.part3[qId] = value;
+      updateProgressUI();
+    };
+
+    function updateProgressUI() {
+      let completedCount = 0;
+
+      state.shuffled.part1.forEach(q => {
+        const done = Boolean(state.answers.part1[q.id]);
+        if (done) completedCount++;
+        const chip = document.getElementById(`chip_${q.id}`);
+        if (chip) chip.classList.toggle("answered", done);
+      });
+
+      state.shuffled.part2.forEach(q => {
+        const ansObj = state.answers.part2[q.id] || {};
+        const done = Boolean(ansObj.a && ansObj.b && ansObj.c && ansObj.d);
+        if (done) completedCount++;
+        const chip = document.getElementById(`chip_${q.id}`);
+        if (chip) chip.classList.toggle("answered", done);
+      });
+
+      state.shuffled.part3.forEach(q => {
+        const val = (state.answers.part3[q.id] || "").trim();
+        const done = val.length > 0;
+        if (done) completedCount++;
+        const chip = document.getElementById(`chip_${q.id}`);
+        if (chip) chip.classList.toggle("answered", done);
+      });
+
+      const pill = document.getElementById("progressPill");
+      if (pill) {
+        pill.textContent = `Đã làm: ${completedCount} / 27 câu`;
+      }
+    }
+
+    function lockAllInputs() {
+      const inputs = document.querySelectorAll("#examSection input");
+      inputs.forEach(inp => {
+        inp.disabled = true;
+      });
+      const labels = document.querySelectorAll(".option-label, .tf-btn-label");
+      labels.forEach(lbl => {
+        lbl.classList.add("locked");
+      });
+    }
+
+    // =========================================================================
+    // TIMER 40 PHÚT DỰA TRÊN DATE.NOW()
+    // =========================================================================
+    function startExamTimer() {
+      if (state.timerInterval) clearInterval(state.timerInterval);
+
+      const updateTimer = () => {
+        if (state.isSubmitted || state.isSubmitting) return;
+        const elapsedSeconds = Math.floor((Date.now() - state.startClientMs) / 1000);
+        const remaining = Math.max(0, examData.durationSeconds - elapsedSeconds);
+
+        const mins = Math.floor(remaining / 60);
+        const secs = remaining % 60;
+        const displayEl = document.getElementById("timerDisplay");
+        const boxEl = document.getElementById("timerBox");
+
+        if (displayEl) {
+          displayEl.textContent = `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+        }
+
+        if (boxEl) {
+          boxEl.classList.remove("warn-5m", "warn-1m");
+          if (remaining <= 60) {
+            boxEl.classList.add("warn-1m");
+          } else if (remaining <= 300) {
+            boxEl.classList.add("warn-5m");
+          }
+        }
+
+        if (remaining <= 0) {
+          clearInterval(state.timerInterval);
+          state.timerInterval = null;
+          submitExam(true);
+        }
+      };
+
+      updateTimer();
+      state.timerInterval = setInterval(updateTimer, 500);
+    }
+
+    // =========================================================================
+    // CÁC HÀM CHẤM ĐIỂM TÁCH BIỆT, MINH BẠCH
+    // =========================================================================
+    function gradePart1() {
+      let totalScore = 0;
+      const items = state.shuffled.part1.map((q, idx) => {
+        const selected = state.answers.part1[q.id] || "";
+        const isComplete = selected !== "";
+        const isCorrect = selected === q.correctAnswer;
+        const score = isCorrect ? 0.25 : 0;
+        totalScore += score;
+
+        return {
+          part: 1,
+          order: idx + 1,
+          questionId: q.id,
+          questionText: q.plainText,
+          sourceType: "multiple_choice",
+          mediaSrc: "",
+          options: q.options.map(o => ({ key: o.key, text: o.plainText })),
+          studentAnswer: selected,
+          correctAnswer: q.correctAnswer,
+          isCorrect: isCorrect,
+          isComplete: isComplete,
+          score: score,
+          maxScore: 0.25,
+          statements: []
+        };
+      });
+
+      return {
+        score: round2(totalScore),
+        items
+      };
+    }
+
+    function gradePart2() {
+      const scoreMap = {
+        0: 0,
+        1: 0.10,
+        2: 0.25,
+        3: 0.50,
+        4: 1.00
+      };
+
+      let totalScore = 0;
+      const items = state.shuffled.part2.map((q, idx) => {
+        const ansObj = state.answers.part2[q.id] || { a: "", b: "", c: "", d: "" };
+        let matchCount = 0;
+        let answeredCount = 0;
+
+        const statementsDetail = q.statements.map(st => {
+          const studentChoice = ansObj[st.label] || "";
+          const correctStr = st.correctAnswer ? "Đúng" : "Sai";
+          if (studentChoice !== "") answeredCount++;
+          const stCorrect = studentChoice === correctStr;
+          if (stCorrect) matchCount++;
+
+          return {
+            label: st.label,
+            text: st.plainText,
+            studentAnswer: studentChoice,
+            correctAnswer: correctStr,
+            isCorrect: stCorrect
+          };
+        });
+
+        const isComplete = answeredCount === 4;
+        const isCorrect = matchCount === 4;
+        const score = scoreMap[matchCount] || 0;
+        totalScore += score;
+
+        const studentSummary = statementsDetail
+          .map(s => `${s.label}: ${s.studentAnswer || "Chưa chọn"}`)
+          .join("; ");
+        const correctSummary = statementsDetail
+          .map(s => `${s.label}: ${s.correctAnswer}`)
+          .join("; ");
+
+        return {
+          part: 2,
+          order: idx + 1,
+          questionId: q.id,
+          questionText: q.plainText,
+          sourceType: "true_false",
+          mediaSrc: "",
+          options: [],
+          studentAnswer: studentSummary,
+          correctAnswer: correctSummary,
+          isCorrect: isCorrect,
+          isComplete: isComplete,
+          score: score,
+          maxScore: 1.00,
+          statements: statementsDetail
+        };
+      });
+
+      return {
+        score: round2(totalScore),
+        items
+      };
+    }
+
+    function gradePart3() {
+      let totalScore = 0;
+      const items = state.shuffled.part3.map((q, idx) => {
+        const rawAns = (state.answers.part3[q.id] || "").trim();
+        const isComplete = rawAns !== "";
+        const isCorrect = isShortAnswerCorrect(rawAns, q);
+        const score = isCorrect ? 0.50 : 0;
+        totalScore += score;
+
+        return {
+          part: 3,
+          order: idx + 1,
+          questionId: q.id,
+          questionText: q.plainText,
+          sourceType: "short_answer",
+          mediaSrc: "",
+          options: [],
+          studentAnswer: rawAns,
+          correctAnswer: q.correctAnswer,
+          isCorrect: isCorrect,
+          isComplete: isComplete,
+          score: score,
+          maxScore: 0.50,
+          statements: []
+        };
+      });
+
+      return {
+        score: round2(totalScore),
+        items
+      };
+    }
+
+    function buildSubmissionDetails() {
+      const p1 = gradePart1();
+      const p2 = gradePart2();
+      const p3 = gradePart3();
+
+      const chiTietBaiLam = [...p1.items, ...p2.items, ...p3.items];
+      const tongSoCau = 27;
+      let soDung = 0;
+      let soChuaLam = 0;
+
+      chiTietBaiLam.forEach(item => {
+        if (!item.isComplete) {
+          soChuaLam++;
+        } else if (item.isCorrect) {
+          soDung++;
+        }
+      });
+
+      const soSai = tongSoCau - soDung - soChuaLam;
+      const diem = round2(p1.score + p2.score + p3.score);
+
+      return {
+        diem,
+        diemPhan1: p1.score,
+        diemPhan2: p2.score,
+        diemPhan3: p3.score,
+        soDung,
+        soSai,
+        soChuaLam,
+        tongSoCau,
+        chiTietBaiLam
+      };
+    }
+
+    // =========================================================================
+    // KẾT NỐI GOOGLE APPS SCRIPT BACKEND (START & SUBMIT)
+    // =========================================================================
+    async function postToAppsScript(payload) {
+      const response = await fetch(APPS_SCRIPT_WEB_APP_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(payload),
+        redirect: "follow"
+      });
+      const text = await response.text();
+      try {
+        return JSON.parse(text);
+      } catch (err) {
+        throw new Error("Phản hồi từ máy chủ không đúng định dạng JSON.");
+      }
+    }
+
+    // Xử lý Đăng nhập & START
+    document.getElementById("loginForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      if (state.started) return;
+
+      const hoTenInput = document.getElementById("inputHoTen");
+      const lopInput = document.getElementById("inputLop");
+      const errorBox = document.getElementById("loginError");
+      const startBtn = document.getElementById("btnStartExam");
+
+      const hoTen = (hoTenInput.value || "").trim().normalize("NFC");
+      const lop = (lopInput.value || "").trim().normalize("NFC");
+
+      errorBox.style.display = "none";
+      errorBox.textContent = "";
+
+      if (!hoTen || !lop) {
+        errorBox.textContent = "Vui lòng nhập đầy đủ Họ và tên học sinh và Lớp trước khi bắt đầu.";
+        errorBox.style.display = "block";
+        return;
+      }
+
+      if (!APPS_SCRIPT_WEB_APP_URL || APPS_SCRIPT_WEB_APP_URL === "DAN_URL_WEB_APP_APPS_SCRIPT_VAO_DAY") {
+        errorBox.textContent = "Giáo viên chưa cấu hình URL Google Apps Script Web App (APPS_SCRIPT_WEB_APP_URL).";
+        errorBox.style.display = "block";
+        return;
+      }
+
+      const attemptId = generateAttemptId();
+      startBtn.disabled = true;
+      startBtn.textContent = "Đang kiểm tra danh sách lớp...";
+
+      try {
+        const res = await postToAppsScript({
+          action: "START",
+          hoTen: hoTen,
+          lop: lop,
+          attemptId: attemptId
+        });
+
+        if (!res || res.status !== "SUCCESS") {
+          const msg = (res && res.message)
+            ? `Không thể bắt đầu làm bài: ${res.message}`
+            : "Không tìm thấy thông tin học sinh hoặc lớp trong danh sách. Vui lòng kiểm tra lại Họ tên và Lớp.";
+          errorBox.textContent = msg;
+          errorBox.style.display = "block";
+          startBtn.disabled = false;
+          startBtn.textContent = "Bắt đầu làm bài";
+          return;
+        }
+
+        // Đăng nhập thành công
+        state.attemptId = attemptId;
+        state.hoTen = hoTen;
+        state.lop = lop;
+        state.started = true;
+        state.isSubmitting = false;
+        state.isSubmitted = false;
+        state.answersRevealed = false;
+        state.startClientMs = Date.now();
+        state.startServerText = res.thoiGianVaoLam || formatDateTimeFallback(state.startClientMs);
+
+        document.getElementById("studentBadge").textContent = `Học sinh: ${state.hoTen} | Lớp: ${state.lop}`;
+        document.getElementById("loginSection").classList.add("hidden");
+        document.getElementById("stickyBar").classList.remove("hidden");
+        document.getElementById("examSection").classList.remove("hidden");
+        document.getElementById("preSubmitActions").classList.remove("hidden");
+        document.getElementById("postSubmitActions").classList.add("hidden");
+
+        initShuffledExam();
+        startExamTimer();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (err) {
+        errorBox.textContent = `Lỗi kết nối đến máy chủ: ${err.message}. Vui lòng thử lại.`;
+        errorBox.style.display = "block";
+      } finally {
+        startBtn.disabled = false;
+        startBtn.textContent = "Bắt đầu làm bài";
+      }
+    });
+
+    // Xử lý NỘP BÀI
+    async function submitExam(isAutoTimeout = false) {
+      if (!state.started || state.isSubmitting || state.isSubmitted) return;
+
+      if (!isAutoTimeout) {
+        const confirmed = window.confirm("Em có chắc chắn muốn nộp bài?");
+        if (!confirmed) return;
+      }
+
+      state.isSubmitting = true;
+      if (state.timerInterval) {
+        clearInterval(state.timerInterval);
+        state.timerInterval = null;
+      }
+
+      // Khóa toàn bộ input ngay khi bắt đầu nộp
+      lockAllInputs();
+
+      const submitBtn = document.getElementById("btnSubmitExam");
+      const submitAlert = document.getElementById("submitAlert");
+      submitAlert.style.display = "none";
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Đang chấm điểm và lưu bài làm...";
+
+      const thoiGianLamGiay = Math.max(1, Math.min(examData.durationSeconds, Math.round((Date.now() - state.startClientMs) / 1000)));
+      const gradeData = buildSubmissionDetails();
+      state.lastGradeResult = {
+        ...gradeData,
+        thoiGianLamGiay
+      };
+
+      const payload = {
+        action: "SUBMIT",
+        hoTen: state.hoTen,
+        lop: state.lop,
+        attemptId: state.attemptId,
+        mon: examData.subjectName,
+
+        diem: gradeData.diem,
+        soDung: gradeData.soDung,
+        soSai: gradeData.soSai,
+        soChuaLam: gradeData.soChuaLam,
+        tongSoCau: gradeData.tongSoCau,
+
+        diemPhan1: gradeData.diemPhan1,
+        diemPhan2: gradeData.diemPhan2,
+        diemPhan3: gradeData.diemPhan3,
+
+        thoiGianVaoLam: state.startServerText,
+        thoiGianLamGiay: thoiGianLamGiay,
+        chiTietBaiLam: gradeData.chiTietBaiLam
+      };
+
+      try {
+        const res = await postToAppsScript(payload);
+
+        if (!res || res.status !== "SUCCESS") {
+          const errMsg = (res && res.message) ? res.message : "Máy chủ trả về lỗi khi lưu bài.";
+          state.isSubmitting = false;
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Nộp lại bài kiểm tra";
+          submitAlert.textContent = `Chưa lưu được bài kiểm tra: ${errMsg}. Em hãy bấm "Nộp lại bài kiểm tra" hoặc báo giáo viên.`;
+          submitAlert.style.display = "block";
+          return;
+        }
+
+        state.isSubmitting = false;
+        state.isSubmitted = true;
+        state.startServerText = res.thoiGianVaoLam || state.startServerText;
+        state.endServerText = res.thoiGianNopBai || formatDateTimeFallback(Date.now());
+
+        document.getElementById("preSubmitActions").classList.add("hidden");
+        document.getElementById("postSubmitActions").classList.remove("hidden");
+
+        showResultModal(res);
+      } catch (err) {
+        state.isSubmitting = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Nộp lại bài kiểm tra";
+        submitAlert.textContent = `Lỗi đường truyền khi lưu bài: ${err.message}. Em hãy bấm "Nộp lại bài kiểm tra" để gửi lại kết quả.`;
+        submitAlert.style.display = "block";
+      }
+    }
+
+    document.getElementById("btnSubmitExam").addEventListener("click", () => submitExam(false));
+
+    // =========================================================================
+    // HIỂN THỊ BẢNG KẾT QUẢ & HIỆN ĐÁP ÁN CHI TIẾT
+    // =========================================================================
+    function showResultModal(serverResponse) {
+      if (!state.isSubmitted || !state.lastGradeResult) return;
+      const g = state.lastGradeResult;
+
+      document.getElementById("resTotalScore").textContent = g.diem.toFixed(2);
+      document.getElementById("resHoTen").textContent = state.hoTen;
+      document.getElementById("resLop").textContent = state.lop;
+      document.getElementById("resScoreP1").textContent = `${g.diemPhan1.toFixed(2)} / 5,00`;
+      document.getElementById("resScoreP2").textContent = `${g.diemPhan2.toFixed(2)} / 3,00`;
+      document.getElementById("resScoreP3").textContent = `${g.diemPhan3.toFixed(2)} / 2,00`;
+      document.getElementById("resStats").textContent = `Đúng tuyệt đối: ${g.soDung} | Chưa đạt tối đa/Sai: ${g.soSai} | Chưa làm: ${g.soChuaLam}`;
+      document.getElementById("resStartTime").textContent = state.startServerText;
+      document.getElementById("resEndTime").textContent = state.endServerText;
+      document.getElementById("resDuration").textContent = formatDurationVi(g.thoiGianLamGiay);
+
+      document.getElementById("resSheetStatus").textContent = "Đã lưu thành công vào Google Sheet";
+      document.getElementById("resSheetStatus").style.color = "var(--success)";
+
+      const driveWarnEl = document.getElementById("resDriveWarning");
+      const driveStatusEl = document.getElementById("resDriveStatus");
+
+      if (serverResponse && serverResponse.driveSaved === false) {
+        const warningText = "Điểm đã được lưu vào Sheet nhưng hồ sơ bài làm trên Drive gặp lỗi. Hãy báo giáo viên.";
+        driveWarnEl.textContent = warningText;
+        driveWarnEl.style.display = "block";
+        driveStatusEl.textContent = "Lỗi lưu PDF bài làm trên Drive (Hãy báo giáo viên)";
+        driveStatusEl.style.color = "var(--danger)";
+      } else {
+        driveWarnEl.style.display = "none";
+        driveStatusEl.textContent = serverResponse && serverResponse.driveFileName
+          ? `Đã lưu PDF (${serverResponse.driveFileName})`
+          : "Đã lưu hồ sơ PDF lên Google Drive";
+        driveStatusEl.style.color = "var(--success)";
+      }
+
+      document.getElementById("resultModalBackdrop").style.display = "flex";
+    }
+
+    function revealAnswers() {
+      if (!state.isSubmitted || !state.lastGradeResult) return;
+      state.answersRevealed = true;
+
+      const detailsMap = {};
+      state.lastGradeResult.chiTietBaiLam.forEach(item => {
+        detailsMap[item.questionId] = item;
+      });
+
+      // Hiển thị đáp án Phần 1
+      state.shuffled.part1.forEach(q => {
+        const detail = detailsMap[q.id];
+        if (!detail) return;
+
+        q.options.forEach(opt => {
+          const lbl = document.getElementById(`lbl_${q.id}_${opt.key}`);
+          if (!lbl) return;
+          lbl.classList.remove("ans-correct", "ans-wrong");
+          if (opt.key === q.correctAnswer) {
+            lbl.classList.add("ans-correct");
+          } else if (opt.key === detail.studentAnswer && !detail.isCorrect) {
+            lbl.classList.add("ans-wrong");
+          }
+        });
+
+        const badge = document.getElementById(`scoreBadge_${q.id}`);
+        if (badge) {
+          badge.style.display = "inline-block";
+          badge.textContent = `${detail.score.toFixed(2)} / 0,25 đ`;
+          badge.style.background = detail.isCorrect ? "var(--success-soft)" : "var(--danger-soft)";
+          badge.style.color = detail.isCorrect ? "#166534" : "#991b1b";
+        }
+
+        const rev = document.getElementById(`reveal_${q.id}`);
+        if (rev) {
+          rev.style.display = "block";
+          rev.className = `reveal-box ${detail.isCorrect ? "reveal-correct" : "reveal-wrong"}`;
+          const stAns = detail.studentAnswer ? `Em chọn: ${detail.studentAnswer}` : "Em chưa chọn đáp án";
+          rev.innerHTML = `${stAns} &bull; Đáp án đúng: <strong>${q.correctAnswer}</strong>`;
+        }
+      });
+
+      // Hiển thị đáp án Phần 2
+      state.shuffled.part2.forEach(q => {
+        const detail = detailsMap[q.id];
+        if (!detail) return;
+
+        detail.statements.forEach(st => {
+          const row = document.getElementById(`tfRow_${q.id}_${st.label}`);
+          if (row) {
+            row.classList.remove("ans-correct", "ans-wrong");
+            row.classList.add(st.isCorrect ? "ans-correct" : "ans-wrong");
+          }
+        });
+
+        const badge = document.getElementById(`scoreBadge_${q.id}`);
+        if (badge) {
+          badge.style.display = "inline-block";
+          badge.textContent = `${detail.score.toFixed(2)} / 1,00 đ`;
+          badge.style.background = detail.score === 1 ? "var(--success-soft)" : (detail.score > 0 ? "var(--warning-soft)" : "var(--danger-soft)");
+          badge.style.color = detail.score === 1 ? "#166534" : (detail.score > 0 ? "#92400e" : "#991b1b");
+        }
+
+        const rev = document.getElementById(`reveal_${q.id}`);
+        if (rev) {
+          rev.style.display = "block";
+          rev.className = `reveal-box ${detail.score === 1 ? "reveal-correct" : "reveal-wrong"}`;
+          const summaryHtml = detail.statements.map(s =>
+            `<strong>${s.label})</strong> Đáp án: ${s.correctAnswer} (Em chọn: ${s.studentAnswer || "Trống"} - ${s.isCorrect ? "Đúng" : "Sai"})`
+          ).join("<br/>");
+          rev.innerHTML = `${summaryHtml}<br/><strong>Điểm câu này: ${detail.score.toFixed(2)} / 1,00 điểm</strong>`;
+        }
+      });
+
+      // Hiển thị đáp án Phần 3
+      state.shuffled.part3.forEach(q => {
+        const detail = detailsMap[q.id];
+        if (!detail) return;
+
+        const badge = document.getElementById(`scoreBadge_${q.id}`);
+        if (badge) {
+          badge.style.display = "inline-block";
+          badge.textContent = `${detail.score.toFixed(2)} / 0,50 đ`;
+          badge.style.background = detail.isCorrect ? "var(--success-soft)" : "var(--danger-soft)";
+          badge.style.color = detail.isCorrect ? "#166534" : "#991b1b";
+        }
+
+        const rev = document.getElementById(`reveal_${q.id}`);
+        if (rev) {
+          rev.style.display = "block";
+          rev.className = `reveal-box ${detail.isCorrect ? "reveal-correct" : "reveal-wrong"}`;
+          const stAns = detail.studentAnswer ? `Câu trả lời của em: <strong>${detail.studentAnswer}</strong>` : "Em chưa nhập câu trả lời";
+          rev.innerHTML = `${stAns} &bull; Đáp án đúng: <strong>${q.correctAnswer}</strong>`;
+        }
+      });
+
+      document.getElementById("resultModalBackdrop").style.display = "none";
+      triggerMathJax();
+    }
+
+    function logoutAndResetSession() {
+      if (state.timerInterval) {
+        clearInterval(state.timerInterval);
+        state.timerInterval = null;
+      }
+
+      state.attemptId = "";
+      state.hoTen = "";
+      state.lop = "";
+      state.started = false;
+      state.isSubmitting = false;
+      state.isSubmitted = false;
+      state.answersRevealed = false;
+      state.startClientMs = 0;
+      state.startServerText = "";
+      state.endServerText = "";
+      state.shuffled = { part1: [], part2: [], part3: [] };
+      state.answers = { part1: {}, part2: {}, part3: {} };
+      state.lastGradeResult = null;
+
+      document.getElementById("part1Container").innerHTML = "";
+      document.getElementById("part2Container").innerHTML = "";
+      document.getElementById("part3Container").innerHTML = "";
+      document.getElementById("navChipsContainer").innerHTML = "";
+
+      document.getElementById("inputHoTen").value = "";
+      document.getElementById("inputLop").value = "";
+      document.getElementById("loginError").style.display = "none";
+      document.getElementById("submitAlert").style.display = "none";
+      document.getElementById("resultModalBackdrop").style.display = "none";
+
+      document.getElementById("stickyBar").classList.add("hidden");
+      document.getElementById("examSection").classList.add("hidden");
+      document.getElementById("loginSection").classList.remove("hidden");
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // Gắn sự kiện cho các nút điều khiển sau khi nộp
+    document.getElementById("btnModalRevealAnswers").addEventListener("click", revealAnswers);
+    document.getElementById("btnRevealAnswersInline").addEventListener("click", revealAnswers);
+    document.getElementById("btnModalClose").addEventListener("click", () => {
+      document.getElementById("resultModalBackdrop").style.display = "none";
+    });
+    document.getElementById("btnShowModalAgain").addEventListener("click", () => {
+      document.getElementById("resultModalBackdrop").style.display = "flex";
+    });
+    document.getElementById("btnModalLogout").addEventListener("click", logoutAndResetSession);
+    document.getElementById("btnLogoutInline").addEventListener("click", logoutAndResetSession);
+  </script>
+</body>
+</html>
